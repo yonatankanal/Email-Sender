@@ -2,12 +2,15 @@ import pandas as pd
 import smtplib
 from email.mime.text import MIMEText
 import pprint
+from email.mime.multipart import MIMEMultipart
+from email import generator
 
 
 
 def main():
     emails = make_data()
-    send_email(emails)
+    # send_email(emails)
+    make_email(emails)
 
 
 def make_data():
@@ -37,7 +40,7 @@ def make_data():
                 filler  = input("***Input 1, 2, or 3*** Which email format for {name}? ")
             email = create_email(filler,name,current,future)
             move_on = input("Press enter to move on to the next student. Press any character and then press enter to choose another format. ")
-        list_o_emails.append({'Email':email, 'Name': name})
+        list_o_emails.append({'Email': email, 'Name': name})
     return list_o_emails
 
 
@@ -82,15 +85,30 @@ Avital
     return body
 
 
+def make_email(emails):
+    i = 1
+    for email in emails:
+        message = MIMEMultipart()
+        message['From'] = 'ASI14@pitt.edu'
+        message['To'] = 'recipient@example.com'
+        message['Subject'] = f'Email to be sent to {email['Name']}'
+        body = email['Email']
+        message.attach(MIMEText(body, 'plain'))
+
+        with open(f'Emls/email{i}.eml', 'w') as eml_file:
+            gen = generator.Generator(eml_file)
+            gen.flatten(message)
+            i += 1
+    
+
 def send_email(emails):
     for email in emails:
-        pprint.pprint(email)
         subject = f'Email to be sent to {email['Name']}'
         body = email['Email']
         sender = '*PUT YOUR EMAIL ADDRESS HERE*' # ACTION REQUIRED
         recipients = ['*PUT YOUR EMAIL ADDRESS HERE*'] # ACTION REQUIRED
         password = '*PUT YOUR PASSWORD HERE*' # ACTION REQUIRED. This is your app password from Outlook, not your normal password (look online 
-        # and it'll walk you through how to get this)
+        # and it'll walk you through how to get this -- https://mailtrap.io/blog/outlook-smtp/)
 
         msg = MIMEText(body)
         msg['Subject'] = subject
@@ -101,6 +119,7 @@ def send_email(emails):
             smtp_server.sendmail(sender, recipients, msg.as_string())
 
         send_email(subject, body, sender, recipients, password)
+
 
 
 

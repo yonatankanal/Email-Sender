@@ -10,4 +10,4 @@ Directions to write and download emails:
 8. Your email files are now in the "Emls" folder on the left. Download them by right-clicking and hitting download.
 9. Go to the file and open it in outlook (choose the "Drafts" folder if it gives you the option).
 10. You will now be able to find the email in your "Drafts" folder in Outlook. Once you're in the email you will have to choose to "Edit" the email. You may have to click on the three dots in the menu bar to find this option.
-11. Finally, once you put in the recipients email address and change the subject you can send the email as normal!
+11. Finally, once you put in the recipient's email address and change the subject you can send the email as normal!
